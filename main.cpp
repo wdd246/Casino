@@ -23,7 +23,6 @@ void ranking();
 void mainMenu();
 
 int main() {
-	cout<<"Witamy w kasynie AdamVegas\nMilej zabawy\n";
 	mainMenu();
 }
 
@@ -86,14 +85,14 @@ void Game::draw(){
 }
 
 void Game::setBet(){
-	cout<<"Stan konta, wynosi "<<player.salary<<"$\n";
-	cout<<"Wprowadz stawke\n";
+	cout<<"Stan twojego konta wynosi "<<player.salary<<"$\n\n";
+	cout<<"Wprowadz stawke\n>>";
 	cin.ignore();
 	cin.clear();
 	cin>>bet;
 	while(!cin.good() || bet>player.salary || bet<=0){
         system("cls");
-		cout<<"Wprowadz stawke, stawka musi byæ wiêksza od 0 oraz nie moze byc wieksza od stanu konta, ktory wynosi "<<player.salary<<"$\n";
+		cout<<"Wprowadz stawke\nStawka musi byæ wiêksza od 0 oraz nie moze byc wieksza od stanu konta, ktory wynosi "<<player.salary<<"$\n>>";
 		cin.clear();
 		cin.ignore();
 		cin>>bet;
@@ -136,8 +135,8 @@ class blackJack : Game{
 };
 
 void blackJack::stay(){
-	cout<<"Wartosc gracza: "<<sumPlayer<<"\n";
-	cout<<"Wartosc cpu: "<<sumCpu<<"\n";
+	cout<<"\nWartosc gracza: "<<sumPlayer<<"\n";
+	cout<<"Wartosc cpu: "<<sumCpu<<"\n\n";
 	if((sumPlayer>sumCpu && sumPlayer<=21) || sumCpu>21){
 		Game::win(1);
 	}
@@ -150,6 +149,7 @@ void blackJack::stay(){
 }
 
 void blackJack::hit(){
+	cout<<"Black Jack\n__________\n\n";
     if(sumCpu<15){
         cpu[count+1] = (rand()%13 )+2; //if cpu cards <15, hit by cpu
         if(cpu[count+1]==11){
@@ -181,11 +181,12 @@ void blackJack::hit(){
 	}
 	cout<<"Karta "<<count+1<<": "<<player[count+1]<<"\n";
 	sumPlayer+=player[count+1];
-	cout<<"Wartosc: "<<sumPlayer<<"\n";
+	cout<<"Wartosc: "<<sumPlayer<<"\n\n";
 	count++;
 }
 
 void blackJack::firstRand(){
+	cout<<"Black Jack\n__________\n\n";
 	srand(time(NULL));
 	for(int i=1;i<3;i++){
 		player[i] = (rand()%13 )+2; // give 2 cards to player
@@ -220,12 +221,12 @@ void blackJack::firstRand(){
 		cout<<"Karta "<<i<<": "<<player[i]<<"\n";
 		count++;
 	}
-	cout<<"Wartosc: "<<sumPlayer<<"\n";
+	cout<<"Wartosc: "<<sumPlayer<<"\n\n";
 }
 
 void blackJack::hitOrStay(){
 	while(true){
-		cout<<"1. Dobierz\n2. Czekaj/Sprawdz\n";
+		cout<<"1. Dobierz\n2. Czekaj/Sprawdz\n>>";
 		cin.ignore();
 		cin.clear();
 		cin>>next;
@@ -244,19 +245,19 @@ void blackJack::hitOrStay(){
 		}
 		if(sumCpu==21 || sumPlayer>21){
 			cout<<"Wartosc gracza: "<<sumPlayer<<"\n";
-			cout<<"Wartosc cpu: "<<sumCpu<<"\n";
+			cout<<"Wartosc cpu: "<<sumCpu<<"\n\n";
 			Game::lose(1);
 			break;
 		}
 		if(sumPlayer==21 || sumCpu>21){
 			cout<<"Wartosc gracza: "<<sumPlayer<<"\n";
-			cout<<"Wartosc cpu: "<<sumCpu<<"\n";
+			cout<<"Wartosc cpu: "<<sumCpu<<"\n\n";
 			Game::win(1);
 			break;
 		}
 		if(sumPlayer==21 && sumCpu==21){
 			cout<<"Wartosc gracza: "<<sumPlayer<<"\n";
-			cout<<"Wartosc cpu: "<<sumCpu<<"\n";
+			cout<<"Wartosc cpu: "<<sumCpu<<"\n\n";
 			Game::draw();
 			break;
 		}
@@ -274,8 +275,8 @@ blackJack::blackJack(){
 }
 
 void blackJack::instruction(){
-	cout<<"Instrukcja\n";
-	cout<<"1. Wprowadz stawke\n2. Na poczatku dostajesz 2 karty o wartosci 2-11 \n3. Mozesz dobrac karty lub zatrzymac to co masz\n4. Jezeli przekroczysz sume kart 21 - przegrywasz.\nJezeli przeciwnik przekroczy sume kart 21 wygrywasz.\nWygrywa ten ktorego suma kart jest blizsza 21\n\n";
+	cout<<"Instrukcja\n__________\n\n";
+	cout<<"1. Wprowadz stawke\n2. Na poczatku dostajesz 2 karty o wartosci 2-11 \n3. Mozesz dobrac karty lub zatrzymac to co masz\n4. Jezeli przekroczysz sume kart 21 - przegrywasz.\n   Jezeli przeciwnik przekroczy sume kart 21 wygrywasz.\n   Wygrywa ten ktorego suma kart jest blizsza 21\n\n";
 	system("pause");
 }
 /* -- end blackJack class -- */
@@ -309,7 +310,8 @@ void fruitMachine::fruitGo(){
 	bool ft=false; //first and third the same
 	float tab[9][3]={{1,1.3,1.5},{2,1.6,1.9},{3, 2.1,2.2},{4,2.5,2.8},{5,3,3.25},{6,3.5,4},{7,5,6},{8,10,15},{9,20,30}}; //multiplies on each number
 	
-	cout<<"Losowanie\n\n| "<<first<<" | "<<secound<<" | "<<third<<" |\n\n";
+	cout<<"Jednoreki bandyta\n_________________\n\n";
+	cout<<"Losowanie\n\n| "<<first<<" | "<<secound<<" | "<<third<<" |\n";
 
 	if(first == secound){
 	    fs=true;
@@ -418,15 +420,16 @@ void fruitMachine::fruitGame(){
 	system("cls");
 	while(true){
 	    system("cls");
-	    cout<<"Twoj bet "<<Game::getBet()<<"\n\n";
-	    cout<<"Stan twojego konta "<<player.salary<<"$\n\n";
-		cout<<"1. Start\n2. Wstecz\n";
+	    cout<<"Jednoreki bandyta\n_________________\n\n";
+	    cout<<"Twoj bet "<<Game::getBet()<<"$\n\n";
+	    cout<<"Stan twojego konta wynosi "<<player.salary<<"$\n\n";
+		cout<<"1. Start\n2. Wstecz\n>>";
 		cin.ignore();
 		cin.clear();
 		cin>>next;
 		if(next==1){
 	        system("cls");
-	        cout<<"Stan twojego konta "<<player.salary<<"$\n\n";
+	        cout<<"Stan twojego konta wynosi"<<player.salary<<"$\n\n";
 	        if(player.salary<Game::getBet()){
 	            cout<<"Niemasz wystarczajacej ilosci pieniedzy\n";
 	            system("pause");
@@ -458,11 +461,11 @@ fruitMachine::fruitMachine(){
 }
 
 void fruitMachine::instruction(){
-	cout<<"Instrukcja\n";
+	cout<<"Instrukcja\n__________\n\n";
 	cout<<"1. Wprowadz stawke\n2. Nastepuje losowanie 3 liczb \n3. Wygrywaja 3 lub 2 te same liczby\n";
 	cout<<"4. Mnoznik\nJaka liczba | Mnoznik za dwie | Mnoznik za trzy\n";
 	cout<<"1 | 1.3 | 1.5\n2 | 1.6 | 1.9\n3 | 2.1 | 2.2\n4 | 2.5 | 2.8\n5 | 3   | 3.25\n6 | 3.5 | 4\n7 | 5   | 6\n8 | 10  | 15\n9 | 20  | 30 \n";
-	cout<<"5. Jezeli wypadnie 10 zastepuje dolwolna liczbe o ile pozostale dwie sa identyczne\nJezeli wypadnie 2 razy 10 oraz jakis znak, mnoznik wynosi 5\nJezeli wypadnie 3 razy 10 mnoznik wynosi 40\n";
+	cout<<"5. Jezeli wypadnie 10 zastepuje dolwolna liczbe o ile pozostale dwie sa identyczne\n   Jezeli wypadnie 2 razy 10 oraz jakis znak, mnoznik wynosi 5\n   Jezeli wypadnie 3 razy 10 mnoznik wynosi 40\n\n";
 	system("pause");
 }
 /* -- end fruitMachine class -- */
@@ -489,6 +492,7 @@ class roulette : Game{
 };
 
 void roulette::rouletteArr(int select){	
+	system("cls");
 	int num=(rand()%37); //random number
 	int black[18]={2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35}; //black array
 	int red[18]={1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36}; //red array
@@ -625,9 +629,11 @@ void roulette::rouletteNum(int number){
 void roulette::rouletteStart(){
 	while(true){
         system("cls");
-        cout<<"Twoj bet "<<Game::getBet()<<"\n\n";
+        cout<<"Ruletka\n_______\n\n";
+        cout<<"Twoj bet "<<Game::getBet()<<"$\n\n";
         cout<<"Stan twojego konta "<<player.salary<<"$\n\n";
-		cout<<"1. Czerwony\n2. Czarny\n3. Parzyste\n4. Nieparzyste\n5. 1:18\n6. 19:36\n7. 1:12\n8. 13:24\n9. 25:36\n10. Liczba\n11. Wstecz\n\n";
+        cout<<"Postaw na: \n";
+		cout<<"1. Czerwony\n2. Czarny\n3. Parzyste\n4. Nieparzyste\n5. 1:18\n6. 19:36\n7. 1:12\n8. 13:24\n9. 25:36\n10. Liczba\n---------\n11. Wstecz\n\n>>";
 		cin.ignore();
 		cin.clear();
 		cin>>next;
@@ -638,7 +644,7 @@ void roulette::rouletteStart(){
 		if(next==10){
 			while(true){
 				system("cls");
-				cout<<"Wpisz liczbe jaka wybierasz 0-36\n";
+				cout<<"Wpisz liczbe jaka wybierasz 0-36\n>>";
 				int number;
 				cin.ignore();
 				cin.clear();
@@ -673,16 +679,16 @@ roulette::roulette(){
 }
 		
 void roulette::instruction(){
-	cout<<"Instrukcja\n";
+	cout<<"Instrukcja\n__________\n\n";
 	cout<<"1. Wprowadz stawke\n2. Wybierasz na co chcesz postawic \n3. Nastepuje losowanie liczby\n";
 	cout<<"4. Wyplaty\n";
-	cout<<"kolor x2\nnumer x35\nparzystosc x2/n1:18 / 19:36 x2\n0 x16\n1:12 / 13:24 / 25:36 x4\n";
+	cout<<"   Kolor x2\n   Numer x35\n   Parzystosc x2\n   1:18 / 19:36 x2\n   1:12 / 13:24 / 25:36 x4\n\n";
 	system("pause");
 }
 /* -- end roulette class -- */
 
 void logOut(){
-	cout<<"\nDziekujemy za wizyte\n";
+	cout<<"\nDziekujemy za wizyte\n\n";
 	system("pause");
 	exit(0);
 }
@@ -801,8 +807,9 @@ void update(int bet){
 /* menu with games */
 void gameMenu(){
 	system("cls");
-	cout<<"Witamy "<<player.name<<" w Kasynie. Twoje saldo to "<<player.salary<<"$\n\n";
-	cout<<"1. Jednoreki bandyta\n2. Ruletka\n3. Black Jack\n\n4. Wstecz\n5. Wyjdz\n";
+	cout<<"******************\n*                *\n*   ADAM VEGAS   *\n*                *\n******************\n\n";
+	cout<<"Witamy "<<player.name<<" w Adam Vegas.\nTwoje saldo to "<<player.salary<<"$\n\n";
+	cout<<"1. Jednoreki bandyta\n2. Ruletka\n3. Black Jack\n-------------\n4. Wstecz\n5. Wyjdz\n>>";
 	int j;
 	cin>>j;
 	if(j==1){
@@ -827,7 +834,6 @@ void gameMenu(){
 		cin.clear();
 		cin.ignore();
 		system("cls");
-		cout<<"Wpisz jeszcze raz\n";
 		gameMenu();
 	}
 }
@@ -853,8 +859,8 @@ void logIn(){
 	fstream users;
 	users.open("users.txt", ios::in);
 	system("cls");
-	cout<<"LOGOWANIE\n";
-	cout<<"Podaj nazwe\nAby wyjsc wpisz exit\n";
+	cout<<"LOGOWANIE\n_________\n\n";
+	cout<<"Podaj nazwe\n--Aby wyjsc wpisz exit\n>>";
 	cin>>player.name;
 	if(player.name=="exit"){ //if name == exit -> quit
 		return;
@@ -863,14 +869,14 @@ void logIn(){
 		cin.clear();
 		cin.ignore();
 		system("cls");
-		cout<<"Podana nazwa nie istnieje lub jest nieprawidlowa\nProsze podac inna\n";
-		cout<<"Podaj nazwe\nAby wyjsc wpisz exit\n";
+		cout<<"Podana nazwa nie istnieje lub jest nieprawidlowa\n\nProsze podac inna\n";
+		cout<<"--Aby wyjsc wpisz exit\n>>";
 		cin>>player.name;
 		if(player.name=="exit"){ //if name == exit -> quit
 			return;
 		}
 	}
-	cout<<"\nZalogowales sie pomyslnie\nTwoje saldo to: "<<player.salary<<"\n";
+	cout<<"\nZalogowales sie pomyslnie\nTwoje saldo to: "<<player.salary<<"$\n\n";
 	users.close();
 	system("pause");
 	gameMenu();
@@ -894,34 +900,34 @@ void signIn(){
 	fstream users;
 	users.open("users.txt", ios::out | ios::app );
 	system("cls");
-	cout<<"REJESTRACJA\n";
-	cout<<"Podaj nazwe\nAby wyjsc wpisz exit\n";
+	cout<<"REJESTRACJA\n___________\n\n";
+	cout<<"Podaj nazwe\n--Aby wyjsc wpisz exit\n>>";
 	cin.clear();
 	cin.ignore();
-	getline(cin >> ws, player.name); //get name
+	getline(cin, player.name); //get name
 	if(player.name=="exit"){
 		return;
 	}
 	deleteSpaces();
-    cout<<"Nazwa zostala zmieniona na "<<player.name<<"\n";
+    cout<<"\nNazwa zostala zmieniona na "<<player.name<<"\n";
 
 	while(exist(player.name)){ // if name exist
 		cin.clear();
 		cin.ignore();
 		system("cls");
-		cout<<"Podana nazwa juz istnieje lub jest nieprawidlowa\nProsze podac inna\n";
-		cout<<"Podaj nazwe\nAby wyjsc wpisz exit\n";
+		cout<<"Podana nazwa juz istnieje lub jest nieprawidlowa\n\nProsze podac inna nazwe\n";
+		cout<<"---Aby wyjsc wpisz exit\n>>";
 		getline(cin,player.name);
 		if(player.name=="exit"){
-			return;
+			return;	
 		}
 		deleteSpaces(); // change spaces into '_'
-		cout<<"Nazwa zostala zmieniona na "<<player.name<<"\n";
+		cout<<"\nNazwa zostala zmieniona na "<<player.name<<"\n";
 	}
 	player.salary = (rand()%1000 );
 	cout<<endl;
 	cout<<"Stan konta: "<<player.salary<<"$\n";
-	cout<<"\nZarejestrowales sie pomyslnie\nNacisnij Enter aby zagrac!\n";
+	cout<<"\nZarejestrowales sie pomyslnie\n\n";
 	users<<player.name<<" "<<intToStr(player.salary)<<"\n";
 	update(0);
 	users.close();
@@ -932,7 +938,7 @@ void signIn(){
 /* ranking */
 void ranking(){
 	system("cls");
-	cout<<"RANKING TOP 100\n\n";
+	cout<<"RANKING TOP 100\n_______________\n\n";
 	fstream users;
 	users.open("users.txt", ios::in);
 	string topName;
@@ -942,10 +948,10 @@ void ranking(){
 		getline(users,topName);
 		if(topName.empty()|| topName==" ")
 			continue;
-		cout<<top<<". "<<topName<<"\n";
+		cout<<top<<". "<<topName<<"$\n";
 		top++;
 	}
-	cout<<"\nNacisnij Enter aby cofnac!\n";
+	cout<<endl;
 	users.close();
 	system("pause");
 }
@@ -953,7 +959,8 @@ void ranking(){
 /* main menu */
 void mainMenu(){
 	int i;
-	cout<<"\nMENU\n1. Zapisz sie\n2. Mam juz konto\n3. Ranking\n4. Wyjdz\n";
+	cout<<"******************\n*                *\n*   ADAM VEGAS   *\n*                *\n******************\n\n";
+	cout<<"\nMENU\n____\n\n1. Zapisz sie\n2. Mam juz konto\n3. Ranking\n4. Wyjdz\n>>";
 	cin>>i;
 	if(i==1){
 	   signIn();
