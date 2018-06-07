@@ -4,7 +4,6 @@
 #include <ctime>
 #include <cctype>
 #include <string>
-#include <sstream>
 #include <algorithm>
 
 using namespace std;
@@ -92,7 +91,7 @@ void Game::setBet(){
 	cin>>bet;
 	while(!cin.good() || bet>player.salary || bet<=0){
         system("cls");
-		cout<<"Wprowadz stawke\nStawka musi byæ wiêksza od 0 oraz nie moze byc wieksza od stanu konta, ktory wynosi "<<player.salary<<"$\n>>";
+		cout<<"Wprowadz stawke\nStawka musi byc wieksza od 0 oraz nie moze byc wieksza od stanu konta, ktory wynosi "<<player.salary<<"$\n>>";
 		cin.clear();
 		cin.ignore();
 		cin>>bet;
@@ -242,24 +241,30 @@ void blackJack::hitOrStay(){
 			cin.ignore();
 			cin.clear();
 			system("cls");
+			cout<<"Wartosc: "<<sumPlayer<<"\n\n";
+		//	hitOrStay();
+			
 		}
 		if(sumCpu==21 || sumPlayer>21){
 			cout<<"Wartosc gracza: "<<sumPlayer<<"\n";
 			cout<<"Wartosc cpu: "<<sumCpu<<"\n\n";
 			Game::lose(1);
 			break;
+			return;
 		}
 		if(sumPlayer==21 || sumCpu>21){
 			cout<<"Wartosc gracza: "<<sumPlayer<<"\n";
 			cout<<"Wartosc cpu: "<<sumCpu<<"\n\n";
 			Game::win(1);
 			break;
+			return;
 		}
 		if(sumPlayer==21 && sumCpu==21){
 			cout<<"Wartosc gracza: "<<sumPlayer<<"\n";
 			cout<<"Wartosc cpu: "<<sumCpu<<"\n\n";
 			Game::draw();
 			break;
+			return;
 		}
 	}
 }
@@ -379,7 +384,7 @@ void fruitMachine::fruitGo(){
 	        }
 	    }
 	}
-	if(fs==true && st==false && ft==false ){ //if 2xY
+	if(fs==true && st==false && ft==false && third!=10){ //if 2xY
 	    for(int i=0;i<=8;i++){
 	        for(int j=0;j<=2;j++){
 	            if(first==tab[i][0]){
@@ -390,7 +395,7 @@ void fruitMachine::fruitGo(){
 	        }
 	    }
 	}
-	if(st==true  && fs==false && ft==false){ //if 2xY
+	if(st==true  && fs==false && ft==false && first!=10){ //if 2xY
 	    for(int i=0;i<=8;i++){
 	        for(int j=0;j<=2;j++){
 	            if(secound==tab[i][0]){
@@ -401,7 +406,7 @@ void fruitMachine::fruitGo(){
 	        }
 	    }
 	}
-	if(ft==true  && fs==false && st==false){ //if 2xY
+	if(ft==true  && fs==false && st==false && secound!=10){ //if 2xY
 	    for(int i=0;i<=8;i++){
 	        for(int j=0;j<=2;j++){
 	            if(first==tab[i][0]){
@@ -695,7 +700,8 @@ void logOut(){
 
 /* convert int to string not using C++11 */
 string intToStr(int n){ 
-     string tmp, ret;
+     string tmp;
+	 string ret;
      if(n < 0){
       	ret = "-";
       	n = -n;
@@ -812,6 +818,7 @@ void gameMenu(){
 	cout<<"1. Jednoreki bandyta\n2. Ruletka\n3. Black Jack\n-------------\n4. Wstecz\n5. Wyjdz\n>>";
 	int j;
 	cin>>j;
+	
 	if(j==1){
 		system("cls");
         fruitMachine Fruit; //fruit machine
@@ -843,6 +850,7 @@ bool exist(string name){
 	fstream users;
 	users.open("users.txt", ios::in);
 	string line;
+	
 	while(!users.eof()){
         users>>line;
         users>>player.salary;
@@ -862,9 +870,11 @@ void logIn(){
 	cout<<"LOGOWANIE\n_________\n\n";
 	cout<<"Podaj nazwe\n--Aby wyjsc wpisz exit\n>>";
 	cin>>player.name;
+	
 	if(player.name=="exit"){ //if name == exit -> quit
 		return;
 	}
+	
 	while(!cin.good() || !exist(player.name)){
 		cin.clear();
 		cin.ignore();
@@ -899,6 +909,7 @@ void signIn(){
 	srand(time(NULL));
 	fstream users;
 	users.open("users.txt", ios::out | ios::app );
+	
 	system("cls");
 	cout<<"REJESTRACJA\n___________\n\n";
 	cout<<"Podaj nazwe\n--Aby wyjsc wpisz exit\n>>";
@@ -928,6 +939,7 @@ void signIn(){
 	cout<<endl;
 	cout<<"Stan konta: "<<player.salary<<"$\n";
 	cout<<"\nZarejestrowales sie pomyslnie\n\n";
+	
 	users<<player.name<<" "<<intToStr(player.salary)<<"\n";
 	update(0);
 	users.close();
@@ -939,11 +951,13 @@ void signIn(){
 void ranking(){
 	system("cls");
 	cout<<"RANKING TOP 100\n_______________\n\n";
+	
 	fstream users;
 	users.open("users.txt", ios::in);
 	string topName;
 	int top=1; //counter
 	sortRank();
+	
 	while(top>=100 || !users.eof()){ //show top100
 		getline(users,topName);
 		if(topName.empty()|| topName==" ")
@@ -951,6 +965,7 @@ void ranking(){
 		cout<<top<<". "<<topName<<"$\n";
 		top++;
 	}
+	
 	cout<<endl;
 	users.close();
 	system("pause");
@@ -962,6 +977,7 @@ void mainMenu(){
 	cout<<"******************\n*                *\n*   ADAM VEGAS   *\n*                *\n******************\n\n";
 	cout<<"\nMENU\n____\n\n1. Zapisz sie\n2. Mam juz konto\n3. Ranking\n4. Wyjdz\n>>";
 	cin>>i;
+	
 	if(i==1){
 	   signIn();
 	}
